@@ -4,6 +4,7 @@ using OBSWebsocketDotNet.Types;
 using OBSWebsocketDotNet.Types.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace OBSNotifier
 {
@@ -271,6 +272,33 @@ namespace OBSNotifier
         {
             return string.Format(format, data[0]);
         }
+
+        string HandleShadowplayMode(string defaultPath)
+        {
+            if (Settings.Instance.IsUseShadowplayStyle)
+            {
+                string windowTitle = Utils.GetCurrentWindowTitle();
+                if (string.IsNullOrWhiteSpace(windowTitle))
+                    return defaultPath;
+
+                string inputFolder = Path.GetDirectoryName(defaultPath);
+                string fileName = Path.GetFileName(defaultPath);
+
+                string updatedFileName = $"{windowTitle}_{fileName}";
+                string targetPath = Path.Combine(inputFolder, updatedFileName);
+                try
+                {
+                    File.Move(defaultPath, targetPath);
+                    return targetPath;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine($"Error renaming file: {ex.Message}");
+                }
+            }
+
+            return defaultPath;
+        }
         #endregion
 
         #region OBS Connection
@@ -313,7 +341,7 @@ namespace OBSNotifier
                         ShowNotif(NotificationType.RecordingStarted);
                         break;
                     case OutputState.OBS_WEBSOCKET_OUTPUT_STOPPED:
-                        ShowNotif(NotificationType.RecordingStopped, FormatterOneArg, e.OutputState.OutputPath);
+                        ShowNotif(NotificationType.RecordingStopped, FormatterOneArg, HandleShadowplayMode(e.OutputState.OutputPath));
                         break;
                     case OutputState.OBS_WEBSOCKET_OUTPUT_STARTING:
                         // Nothing to do
@@ -369,7 +397,7 @@ namespace OBSNotifier
 
         private void Obs_ReplayBufferSaved(object sender, ReplayBufferSavedEventArgs e)
         {
-            InvokeNotif(() => ShowNotif(NotificationType.ReplaySaved, FormatterOneArg, e.SavedReplayPath));
+            InvokeNotif(() => ShowNotif(NotificationType.ReplaySaved, FormatterOneArg, HandleShadowplayMode(e.SavedReplayPath)));
         }
         #endregion
 

@@ -48,6 +48,8 @@
 
             <Separator Height="2" Style="{StaticResource emptySeparator}"/>
             <CheckBox x:Name="cb_close_on_closing" Content="{DynamicResource settings_window_close_on_obs_exit}" Checked="cb_close_on_closing_Checked" Unchecked="cb_close_on_closing_Unchecked" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <Separator Height="2" Style="{StaticResource emptySeparator}"/>
+            <CheckBox x:Name="cb_shadowplay_style" Content="{DynamicResource settings_window_shadowplay_style}" Checked="cb_shadowplay_style_Checked" Unchecked="cb_shadowplay_style_Unchecked" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
 
             <Separator Height="2" Style="{StaticResource emptySeparator}"/>
             <TextBlock HorizontalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="SupportTextBlock_MouseLeftButtonUp">

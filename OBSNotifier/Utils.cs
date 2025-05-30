@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -11,6 +13,30 @@ namespace OBSNotifier
 {
     public static partial class Utils
     {
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        public static string GetCurrentWindowTitle()
+        {
+            IntPtr handle = GetForegroundWindow();
+            if (handle == IntPtr.Zero)
+                return string.Empty;
+
+            try
+            {
+                GetWindowThreadProcessId(handle, out uint processId);
+                Process proc = Process.GetProcessById((int)processId);
+                return proc.ProcessName;
+            }
+            catch 
+            {
+                return string.Empty;
+            }
+        }
+
         /// <summary>
         /// Get the translated string by ID
         /// </summary>

@@ -45,6 +45,7 @@
     <v:String x:Key="settings_window_run_with_obs_button">Start with OBS</v:String>
     <v:String x:Key="settings_window_run_with_obs_button_outdated">(script is outdated)</v:String>
     <v:String x:Key="settings_window_close_on_obs_exit">Close this program when exiting OBS&#10;(when Settings window closed)</v:String>
+    <v:String x:Key="settings_window_shadowplay_style">Rename recordings Shadowplay style&#10;(Prepend Game Name)</v:String>
     <v:String x:Key="settings_window_notification_settings">Notification Settings</v:String>
     <v:String x:Key="settings_window_preview">Preview</v:String>
     <v:String x:Key="settings_window_screen_label">Screen:</v:String>

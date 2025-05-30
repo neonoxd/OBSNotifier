@@ -265,6 +265,8 @@ namespace OBSNotifier
                 // checkboxes
                 cb_close_on_closing.IsChecked = Settings.Instance.IsCloseOnOBSClosing;
 
+                cb_shadowplay_style.IsChecked = Settings.Instance.IsUseShadowplayStyle;
+
                 // autostart
                 try
                 {
@@ -440,6 +442,22 @@ namespace OBSNotifier
             if (IsChangedByCode) return;
 
             Settings.Instance.IsCloseOnOBSClosing = true;
+            Settings.Instance.Save();
+        }
+
+        private void cb_shadowplay_style_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (IsChangedByCode) return;
+
+            Settings.Instance.IsUseShadowplayStyle = false;
+            Settings.Instance.Save();
+        }
+
+        private void cb_shadowplay_style_Checked(object sender, RoutedEventArgs e)
+        {
+            if (IsChangedByCode) return;
+
+            Settings.Instance.IsUseShadowplayStyle = true;
             Settings.Instance.Save();
         }
 
